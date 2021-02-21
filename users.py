@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Api, Namespace, fields
-import pymysql
+import dbconnect
 
 todos = {}
 count = 1
@@ -16,14 +16,7 @@ class TodoPost(Resource):
     @Users.response(201, 'Success')
     def get(self):
         """Users 리스트를 출력합니다"""
-        db = pymysql.connect(
-        host='127.0.0.1', 
-        port=3306, 
-        user='root', 
-        passwd='123123', 
-        db='ast', 
-        charset='utf8'
-        )
+        db = dbconnect.db_con()
         cursor = db.cursor()
         sql = '''SELECT * FROM ast.users;'''
         cursor.execute(sql)

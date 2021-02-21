@@ -1,6 +1,7 @@
 from flask import request
 from flask_restx import Resource, Api, Namespace, fields
 import pymysql
+import dbconnect
 
 User = Namespace(
     name="User",
@@ -45,14 +46,7 @@ class UserPost(Resource):
         )
 
         #db에 아이디 추가하기
-        db = pymysql.connect(
-        host='127.0.0.1', 
-        port=3306, 
-        user='root', 
-        passwd='123123', 
-        db='ast', 
-        charset='utf8'
-        )
+        db = dbconnect.db_con()
         cursor = db.cursor()
         sql = '''
             Insert into users (user_id, user_email, user_name, user_password, user_hp, user_nickname, leave_flag)
